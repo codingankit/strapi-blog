@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_shared_nav_links",
+  "info": {
+    "displayName": "NavLink"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "newTab": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "config": {}
+}
