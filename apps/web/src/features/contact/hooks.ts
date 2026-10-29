@@ -6,6 +6,6 @@ import { contactSalesSchema, ContactSalesSchema } from "./schemas";
 
 export const useContactSales = () =>
   useForm<ContactSalesSchema>({
-    resolver: zodResolver(contactSalesSchema as any),
+    resolver: zodResolver(contactSalesSchema),
     defaultValues: { name: "", email: "", message: "" },
   });

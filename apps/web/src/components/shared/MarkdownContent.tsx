@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
@@ -39,7 +39,7 @@ export function MarkdownContent({ content, className }: MarkdownProps) {
               </div>
             );
           },
-          code({ node, inline, className, children, ...props }: any) {
+          code({ className, children, ...props }: React.ComponentPropsWithoutRef<"code">) {
             const isInline = !className?.includes("hljs");
 
             if (isInline) {
@@ -67,14 +67,17 @@ export function MarkdownContent({ content, className }: MarkdownProps) {
   );
 }
 
-function CopyButton({ code }: { code: any }) {
+function CopyButton({ code }: { code: React.ReactNode }) {
   const [copied, setCopied] = useState(false);
 
   const onCopy = () => {
-    const extractText = (node: any): string => {
+    const extractText = (node: React.ReactNode): string => {
       if (typeof node === "string") return node;
+      if (typeof node === "number") return String(node);
       if (Array.isArray(node)) return node.map(extractText).join("");
-      if (node?.props?.children) return extractText(node.props.children);
+      if (React.isValidElement(node) && (node.props as { children?: React.ReactNode })?.children) {
+        return extractText((node.props as { children?: React.ReactNode }).children);
+      }
       return "";
     };
 

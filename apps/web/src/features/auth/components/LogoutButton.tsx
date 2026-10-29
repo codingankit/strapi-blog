@@ -1,17 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/button";
 import { logOut } from "@/features/auth/actions";
 import { ConfirmDialog } from "@/components/shared/ConfirmDialog";
 
+const emptySubscribe = () => () => {};
+
 export function LogoutButton({ onSuccess }: { onSuccess?: () => void }) {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
   const handleLogout = async () => {
     onSuccess?.();

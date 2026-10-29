@@ -12,8 +12,6 @@ import { useRouter } from "next/navigation";
 // type ViewState = "selection" | "sales" | "support";
 
 export default function Contact() {
-  // const [view, setView] = useState<ViewState>("selection");
-  const isLoggedIn = true; // Replace with your Auth logic
   const router = useRouter();
 
   return (
@@ -34,7 +32,7 @@ export default function Contact() {
             <div>
               <CardTitle className="text-2xl">Sales & Partnerships</CardTitle>
               <CardDescription className="text-base mt-2">
-                Interested in a custom plan or enterprise features? Let's talk
+                Interested in a custom plan or enterprise features? Let&apos;s talk
                 business.
               </CardDescription>
             </div>

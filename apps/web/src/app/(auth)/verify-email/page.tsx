@@ -27,8 +27,10 @@ export default function VerifyEmail() {
     if (!storedUserId && !storedEmail) {
       router.replace("/login");
     } else {
-      setUserId(storedUserId);
-      setEmail(storedEmail);
+      queueMicrotask(() => {
+        setUserId(storedUserId);
+        setEmail(storedEmail);
+      });
     }
   }, [router]);
 
@@ -113,7 +115,7 @@ export default function VerifyEmail() {
         </h1>
 
         <p className="text-muted-foreground leading-relaxed mb-8 text-center">
-          We've sent a temporary verification link to your inbox. Please click
+          We&apos;ve sent a temporary verification link to your inbox. Please click
           the link to verify your email and get started.
         </p>
 

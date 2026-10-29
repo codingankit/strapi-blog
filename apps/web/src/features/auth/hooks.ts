@@ -18,34 +18,35 @@ import {
 
 export const useSignupForm = () =>
   useForm<SignupSchema>({
-    resolver: zodResolver(signupSchema as any),
+    resolver: zodResolver(signupSchema),
     defaultValues: { name: "", email: "", password: "" },
   });
 
 export const useLoginForm = () =>
   useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema as any),
+    resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
 
 export const useForgotPasswordForm = () =>
   useForm<ForgotPasswordSchema>({
-    resolver: zodResolver(forgotPasswordSchema as any),
+    resolver: zodResolver(forgotPasswordSchema),
     defaultValues: { email: "" },
   });
 
 export const useResetPasswordForm = () =>
   useForm<ResetPasswordSchema>({
-    resolver: zodResolver(resetPasswordSchema as any),
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: { password: "" },
   });
 
 export function useUser() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const supabase = createClient();
 
   useEffect(() => {
+    const supabase = createClient();
+
     const getSession = async () => {
       const {
         data: { user },

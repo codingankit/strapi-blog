@@ -29,7 +29,7 @@ export interface Pagination {
 
 export interface Meta {
   pagination?: Pagination;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface StrapiResponse<TData, TMeta = object> {

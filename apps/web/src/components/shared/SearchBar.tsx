@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useTransition, useRef, useEffect } from "react";
+import { useTransition, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Loader2, Search, X } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
@@ -15,14 +15,22 @@ export function SearchBar({
   const pathname = usePathname();
   const { replace } = useRouter();
   const [isPending, startTransition] = useTransition();
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSearch = useDebouncedCallback((term: string) => {
+  const currentQuery = searchParams.get("search")?.toString() || "";
+  const [term, setTerm] = useState(currentQuery);
+  const [prevQuery, setPrevQuery] = useState(currentQuery);
+
+  if (prevQuery !== currentQuery) {
+    setPrevQuery(currentQuery);
+    setTerm(currentQuery);
+  }
+
+  const handleSearch = useDebouncedCallback((newTerm: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", "1");
 
-    if (term) {
-      params.set("search", term);
+    if (newTerm) {
+      params.set("search", newTerm);
     } else {
       params.delete("search");
     }
@@ -33,10 +41,8 @@ export function SearchBar({
   }, 400);
 
   const handleClear = () => {
-    if (inputRef.current) {
-      inputRef.current.value = "";
-      handleSearch("");
-    }
+    setTerm("");
+    handleSearch("");
   };
 
   return (
@@ -51,15 +57,17 @@ export function SearchBar({
       </div>
 
       <Input
-        ref={inputRef}
         type="text"
         placeholder={placeholder}
-        defaultValue={searchParams.get("search")?.toString()}
-        onChange={(e) => handleSearch(e.target.value)}
+        value={term}
+        onChange={(e) => {
+          setTerm(e.target.value);
+          handleSearch(e.target.value);
+        }}
         className="pl-10 pr-10 h-11 w-full bg-background border-muted-foreground/20 shadow-sm transition-all duration-200 focus-visible:ring-primary/20 focus-visible:border-primary rounded-lg"
       />
 
-      {inputRef.current?.value || searchParams.get("search") ? (
+      {term ? (
         <button
           onClick={handleClear}
           className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
