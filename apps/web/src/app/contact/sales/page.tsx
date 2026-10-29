@@ -79,7 +79,7 @@ export default function ContactSales() {
                   <FormControl>
                     <Textarea
                       placeholder="How can we help you?..."
-                      className="min-h-[180px] resize-none"
+                      className="min-h-45 resize-none"
                       {...field}
                     />
                   </FormControl>

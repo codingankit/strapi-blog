@@ -15,24 +15,26 @@ const COOLDOWN_TIME = 90;
 
 export default function VerifyEmail() {
   const router = useRouter();
-  const [userId, setUserId] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
+
+  const [userId] = useState<string | null>(() =>
+    typeof window !== "undefined"
+      ? sessionStorage.getItem("pending_verification_user_id")
+      : null,
+  );
+  const [email] = useState<string | null>(() =>
+    typeof window !== "undefined"
+      ? sessionStorage.getItem("pending_verification_email")
+      : null,
+  );
+
   const [isPending, startTransition] = useTransition();
   const [countdown, setCountdown] = useState(COOLDOWN_TIME);
 
   useEffect(() => {
-    const storedUserId = sessionStorage.getItem("pending_verification_user_id");
-    const storedEmail = sessionStorage.getItem("pending_verification_email");
-
-    if (!storedUserId && !storedEmail) {
+    if (!userId && !email) {
       router.replace("/login");
-    } else {
-      queueMicrotask(() => {
-        setUserId(storedUserId);
-        setEmail(storedEmail);
-      });
     }
-  }, [router]);
+  }, [userId, email, router]);
 
   useEffect(() => {
     if (!userId) return;
@@ -105,7 +107,7 @@ export default function VerifyEmail() {
 
   return (
     <div className="flex flex-col items-center justify-center px-4 py-16">
-      <div className="w-full max-w-[450px] p-10">
+      <div className="w-full max-w-112.5 p-10">
         <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-8">
           <Mail className="h-10 w-10 text-primary" />
         </div>
@@ -115,8 +117,8 @@ export default function VerifyEmail() {
         </h1>
 
         <p className="text-muted-foreground leading-relaxed mb-8 text-center">
-          We&apos;ve sent a temporary verification link to your inbox. Please click
-          the link to verify your email and get started.
+          We&apos;ve sent a temporary verification link to your inbox. Please
+          click the link to verify your email and get started.
         </p>
 
         <div className="pt-4 w-full text-muted-foreground leading-tight text-sm font-medium text-center">
