@@ -5,12 +5,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const getURL = () => {
+export function getURL() {
   let url =
-    process?.env?.NEXT_PUBLIC_SITE_URL ??
-    process?.env?.NEXT_PUBLIC_VERCEL_URL ??
-    "http://localhost:3000";
+    process.env.NEXT_PUBLIC_SITE_URL ?? // Your custom production domain (VPS, Docker, AWS, etc.)
+    process.env.VERCEL_URL ?? // Auto-set by Vercel on preview deployments
+    `http://localhost:${process.env.PORT ?? 3000}`; // Local dev fallback
 
   url = url.includes("http") ? url : `https://${url}`;
-  return url;
-};
+  return url.replace(/\/+$/, "");
+}

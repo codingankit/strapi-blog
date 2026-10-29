@@ -10,6 +10,7 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "strapi": "strapi",
+    "typecheck": "tsc --noEmit",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
@@ -26,7 +27,7 @@
     "styled-components": "^6.5.3"
   },
   "devDependencies": {
-    "@types/node": "^25.9.8",
+    "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "typescript": "^5.9.3"
@@ -34,5 +35,8 @@
   "strapi": {
     "uuid": "8a0eef25-2245-44f3-b1fd-c0a282f47695",
     "installId": "0a5d3ec275cbaf78db302271a2c9cf5a28ba29a4986c2d10dfb23881a872faa2"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }

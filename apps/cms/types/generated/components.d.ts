@@ -62,7 +62,7 @@ export interface SharedNavLink extends Struct.ComponentSchema {
 }
 
 declare module '@strapi/strapi' {
-  export module Public {
+  export namespace Public {
     export interface ComponentSchemas {
       'sections.featured-categories': SectionsFeaturedCategories;
       'sections.hero': SectionsHero;
