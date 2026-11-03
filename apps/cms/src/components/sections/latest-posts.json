@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_latest_posts",
+  "info": {
+    "displayName": "LatestPosts"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "postCount": {
+      "type": "integer"
+    }
+  },
+  "config": {}
+}

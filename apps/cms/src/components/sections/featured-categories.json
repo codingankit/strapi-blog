@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_sections_featured_categories",
+  "info": {
+    "displayName": "FeaturedCategories"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category.category"
+    }
+  },
+  "config": {}
+}
